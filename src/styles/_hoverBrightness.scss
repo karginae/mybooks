@@ -1,0 +1,8 @@
+%hover-brightness {
+  transition: all .2s ease-in-out 0s;
+  filter: brightness(1);
+
+  &:hover {
+    filter: brightness(0.75);
+  }
+}

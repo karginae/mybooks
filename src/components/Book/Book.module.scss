@@ -1,0 +1,110 @@
+@import '/src/styles/hoverBrightness';
+
+.book {
+  position: relative;
+  width: 208px;
+  height: 325px;
+  background-color: rgba(0, 0, 0, 0);
+  margin-right: 60px;
+  margin-bottom: 50px;
+  $info-color: #D4D7E3;
+  overflow: hidden;
+  transition: transform 0.3s ease-out;
+  cursor: pointer;
+
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+
+    .infoTop, .infoBottom {
+      opacity: 1;
+      animation: info .3s ease-out;
+    }
+  }
+  
+  @keyframes info {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+
+  %info {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    background-color: rgba(3, 0, 26, 0.75);
+    padding: 0 15px;
+  }
+
+  .infoTop {
+    @extend %info;
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    
+    .price {
+      display: block;
+      margin: auto 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: $info-color;
+    }
+
+    .like {
+      margin: auto 0;
+      height: 19px;
+      object-fit: contain;
+      @extend %hover-brightness;
+    }
+  }
+
+  .infoBottom {
+    @extend %info;
+
+    display: flex;
+    flex-direction: column;
+    height: 110px;
+    bottom: 0;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+
+    %hidden-info {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .title {
+      @extend %hidden-info;
+      max-height: 2.5em;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      color: $info-color;
+    }
+
+    .author {
+      @extend %hidden-info;
+      margin-bottom: 5px;
+      color: $info-color;
+    }
+
+    .year {
+      @extend %hidden-info;
+      margin-bottom: 5px;
+      color: $info-color;
+    }
+
+    .pages {
+      @extend %hidden-info;
+      color: $info-color;
+    }
+  }
+
+  .bookCover {
+    height: 100%;
+    object-fit: cover;
+  }
+}
