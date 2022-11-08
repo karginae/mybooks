@@ -1,13 +1,14 @@
 @import '/src/styles/hoverBrightness';
 
 .book {
+  $info-color: #D4D7E3;
+
   position: relative;
   width: 208px;
   height: 325px;
   background-color: rgba(0, 0, 0, 0);
   margin-right: 60px;
   margin-bottom: 50px;
-  $info-color: #D4D7E3;
   overflow: hidden;
   transition: transform 0.3s ease-out;
   cursor: pointer;
@@ -57,6 +58,12 @@
       height: 19px;
       object-fit: contain;
       @extend %hover-brightness;
+      transition: filter .2s ease-in-out, transform 0.1s ease-in-out;
+
+
+      &:active {
+        transform: scale(0.95);
+      }
     }
   }
 
