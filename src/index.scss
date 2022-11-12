@@ -7,6 +7,10 @@
 	box-sizing: border-box;
 }
 
+input {
+	outline: none;
+}
+
 body {
 	margin: 0;
 	background-color: #030016;
@@ -25,6 +29,21 @@ header {
 	.container {
 		display: flex;
 		justify-content: space-between;
+	}
+
+	.search-input {
+		width: 100%;
+		margin: auto 0 auto 50px;
+		font-size: 20px;
+		background-color: #030016;
+		border: none;
+	}
+
+	input::-webkit-input-placeholder {
+		color: #b3b8c9;
+	}
+	input:-moz-placeholder {
+		color: #b3b8c9;
 	}
 }
 
