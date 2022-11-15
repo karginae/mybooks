@@ -2,14 +2,18 @@ import React from 'react';
 
 import styles from './Book.module.scss';
 
-function Book({title, author, year, pages, price, cover, addFavorite}) {
+function Book({id, title, author, year, pages, price, cover, addFavorite, removeFavorite, favoriteBooks}) {
   const [like, setLike] = React.useState(false);
 
   const clickLike = () => {
-    addFavorite({title, author, year, pages, price, cover});
+    like ? removeFavorite(title) : addFavorite({id, title, author, year, pages, price, cover});
     setLike(!like);
   };
-
+  
+  if (favoriteBooks.find((book) => (book.title === title)) && like === false) {
+    setLike(true);
+  }
+  
   return (
     <article className={styles.book}>
       <div className={styles.infoTop}>

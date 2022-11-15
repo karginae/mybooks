@@ -1,11 +1,12 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './components/Header';
-import Book from './components/Book';
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
 
 function App() {
-
   const [books, setBooks] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState('');
   const [favoriteBooks, setFavoriteBooks] = React.useState([]);
@@ -20,27 +21,30 @@ function App() {
     setFavoritesValue(favoriteBooks.length);
   }, [favoriteBooks]);
 
-  const addFavorite = (obj) => {
-    axios.post('https://6369798728cd16bba71e5865.mockapi.io/favorites', obj);
-    setFavoriteBooks((prev) => ([...prev, obj]));
-    console.log('+1');
+  const addFavorite = async (obj) => {
+    try {
+      const {data} = await axios.post('https://6369798728cd16bba71e5865.mockapi.io/favorites', obj);
+      setFavoriteBooks((prev) => ([...prev, data]));
+    } catch(error) {
+      alert('Ошибка добавления в избранные');
+    }
   };
+
+  const removeFavorite = (title) => {
+    const {id} = favoriteBooks.find((book) => (book.title === title));
+    axios.delete(`https://6369798728cd16bba71e5865.mockapi.io/favorites/${id}`);
+    setFavoriteBooks((prev) => (prev.filter((book) => (book.id !== id))));
+  };
+
+  const searchFilter = (book) => (book.title.toLowerCase().includes(searchValue.toLowerCase()) || book.author.toLowerCase().includes(searchValue.toLowerCase()));
 
   return (
     <div>
-      <Header pars={(obj) => (setSearchValue(obj))} favoritesValue={favoritesValue} />
-      <main>
-        <div className='container'>
-          <h2>Популярные книги</h2>
-          <div className="books">
-            {
-              books.filter((book) => (book.title.toLowerCase().includes(searchValue.toLowerCase()) || book.author.toLowerCase().includes(searchValue.toLowerCase()))).map((book) => (
-                <Book key={book.title} title={book.title} author={book.author} year={book.year} pages={book.pages} price={book.price} cover={book.cover} addFavorite={(obj) => addFavorite(obj)} />
-              ))
-            }
-          </div>
-        </div>
-      </main>
+      <Header getSearchValue={(obj) => (setSearchValue(obj))} favoritesValue={favoritesValue} />
+      <Routes>
+        <Route path='/' element={<Home books={books} addFavorite={addFavorite} removeFavorite={removeFavorite} searchFilter={searchFilter} favoriteBooks={favoriteBooks} />}></Route>
+        <Route path='/favorites' element={<Favorites books={books} addFavorite={addFavorite} removeFavorite={removeFavorite} searchFilter={searchFilter} favoriteBooks={favoriteBooks} />}></Route>
+      </Routes>
     </div>
   )
 };

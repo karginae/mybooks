@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Header(props) {
 
@@ -16,7 +17,7 @@ function Header(props) {
 
   const searching = (e) => {
     setSearchValue(e.target.value);
-    props.pars(e.target.value);
+    props.getSearchValue(e.target.value);
   };
 
   return (
@@ -25,15 +26,17 @@ function Header(props) {
         <div style={isSearching ? {width: '30px'} : null} className="header-left">
           <img src="/img/logo/burger.svg" alt="menu" className="burger" />         
         </div>
-        {isSearching ? <input onChange={searching} className="search-input" type={'text'} value={searchValue} placeholder="Поиск..."></input> : <div className="header-centr"><h1>myBooks</h1></div>}
+        {isSearching ? <input onChange={searching} className="search-input" type={'text'} value={searchValue} placeholder="Поиск..."></input> : <div className="header-centr"><Link to='/'><h1>myBooks</h1></Link></div>}
         <ul className="header-right">
-          {searchValue ? <li onClick={() => {setSearchValue(''); props.pars('');}} className="close-search-logo"><img src="/img/logo/close.svg" alt="close" /></li> : null}
+          {searchValue ? <li onClick={() => {setSearchValue(''); props.getSearchValue('');}} className="close-search-logo"><img src="/img/logo/close.svg" alt="close" /></li> : null}
           <li className="search-logo" onClick={clickSearch}>
             <img src="/img/logo/search.svg" alt="search" />
           </li>
           <li className="favorite-logo">
-            <img src="/img/logo/favorite.svg" alt="favorite" />
-            <span>{props.favoritesValue}</span>
+            <Link to='/favorites'>
+              <img src="/img/logo/favorite.svg" alt="favorite" />
+              <span>{props.favoritesValue}</span>
+            </Link>
           </li>
           <li className="cart-logo">
             <img src="/img/logo/cart.svg" alt="cart" />
