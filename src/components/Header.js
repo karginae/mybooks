@@ -39,8 +39,10 @@ function Header(props) {
             </Link>
           </li>
           <li className="cart-logo">
-            <img src="/img/logo/cart.svg" alt="cart" />
-            <span>2</span>
+            <Link to='/cart'>
+              <img src="/img/logo/cart.svg" alt="cart" />
+              <span>{props.cartValue}</span>
+            </Link>
           </li>
         </ul>
       </div>

@@ -62,7 +62,7 @@
 
 
       &:active {
-        transform: scale(0.95);
+        transform: scale(0.93);
       }
     }
   }
@@ -88,19 +88,19 @@
       @extend %hidden-info;
       max-height: 2.5em;
       margin-top: 10px;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       color: $info-color;
     }
 
     .author {
       @extend %hidden-info;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       color: $info-color;
     }
 
     .year {
       @extend %hidden-info;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       color: $info-color;
     }
 

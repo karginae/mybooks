@@ -1,0 +1,13 @@
+@import '/src/styles/hoverBrightness';
+
+.button {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 15px;
+  padding: 15px;
+  line-height: 1em;
+  background-color: #130D3D;
+  border-radius: 15px;
+  @extend %hover-brightness;
+  cursor: pointer;
+}
