@@ -8,6 +8,13 @@
 	list-style-type: none;
 }
 
+input::-webkit-input-placeholder {
+	color: #b3b8c9;
+}
+input:-moz-placeholder {
+	color: #b3b8c9;
+}
+
 a {
   background-color: transparent;
   text-decoration: none;
@@ -44,13 +51,6 @@ header {
 		font-size: 20px;
 		background-color: #030016;
 		border: none;
-	}
-
-	input::-webkit-input-placeholder {
-		color: #b3b8c9;
-	}
-	input:-moz-placeholder {
-		color: #b3b8c9;
 	}
 }
 
@@ -119,6 +119,16 @@ main {
 		margin: 0 0 30px 0;
 	}
 
+	.input {
+		width: 210px;
+		padding: 10px 20px;
+		font-size: 16px;
+		font-weight: 400;
+		background-color: #030016;
+		border: 1px solid #29263E;
+		border-radius: 10px;
+	}
+
 	.books {
 		display: flex;
 		flex-wrap: wrap;
@@ -155,17 +165,47 @@ main {
 		}
 
 		.actions {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 			margin-left: 50px;
+			width: 243px;
+			height: 216px;
+			padding: 0 15px;
+			background-color: #0A071E;
+			border-radius: 15px;
 
-			.add {
-				width: 211px;
+			.price {
+				margin: 20px 0;
+				font-size: 32px;
+				font-weight: 700;
+				line-height: 1em;
+			}
+
+			.addToCart {
+				width: 100%;
 				font-size: 16px;
 				font-weight: 700;
-				margin-top: 15px;
+				margin-bottom: 20px;
 				padding: 15px;
 				line-height: 1em;
 				background-color: #130D3D;
 				border-radius: 15px;
+				border: none;
+				@extend %hover-brightness;
+				cursor: pointer;
+			}
+
+			.addToFavorites {
+				width: 100%;
+				font-size: 16px;
+				font-weight: 700;
+				margin-bottom: 20px;
+				padding: 15px;
+				line-height: 1em;
+				background-color: #671A0F;
+				border-radius: 15px;
+				border: none;
 				@extend %hover-brightness;
 				cursor: pointer;
 			}

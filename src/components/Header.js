@@ -32,6 +32,11 @@ function Header(props) {
           <li className="search-logo" onClick={clickSearch}>
             <img src="/img/logo/search.svg" alt="search" />
           </li>
+          <li className="auth-logo">
+            <Link to='/auth'>
+              <img src="/img/logo/auth.svg" alt="sign-in" />
+            </Link>
+          </li>
           <li className="favorite-logo">
             <Link to='/favorites'>
               <img src="/img/logo/favorite.svg" alt="favorite" />

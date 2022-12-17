@@ -1,15 +1,17 @@
 import React from 'react';
 import ContentLoader from "react-content-loader";
 import { Link } from 'react-router-dom';
-// import { slugify } from 'transliteration';
+import { useSelector } from 'react-redux';
 
 import styles from './Book.module.scss';
+import axios from '../../axios';
 
-function Book({id, title, author, year, pages, price, cover, ISBN, age_limit, addFavorite, removeFavorite, favoriteBooks, isLoading}) {
+function Book({_id, title, author, year, pages, price, cover, isbn, age_limit, addFavorite, removeFavorite, favoriteBooks, isLoading}) {
   const [like, setLike] = React.useState(false);
 
-  const loading =
-    <ContentLoader 
+  const isAuth = useSelector((state) => (Boolean(state.auth.data?.email)));
+
+  const loading = <ContentLoader 
     speed={2}
     width={208}
     height={330}
@@ -18,17 +20,22 @@ function Book({id, title, author, year, pages, price, cover, ISBN, age_limit, ad
     foregroundColor="#8b90a2"
     >
     <rect x="0" y="0" rx="0" ry="0" width="208" height="330" />
-    </ContentLoader>
+  </ContentLoader>
 
   const clickLike = () => {
-    like ? removeFavorite(title) : addFavorite({id, title, author, year, pages, price, cover, ISBN, age_limit});
-    setLike(!like);
+    if (isAuth) {
+      like ? removeFavorite(_id) : addFavorite({_id});
+      setLike(!like);
+    }
+    else {
+      alert('Для того чтобы добавить книгу в избранные, необходимо авторизоваться');
+    }
   };
-  
-  if (favoriteBooks.find((book) => (book.title === title)) && like === false) {
+
+  if (isAuth && favoriteBooks.find((favoriteBook) => (favoriteBook.book._id === _id)) && like === false) {
     setLike(true);
   };
-  
+
   return (
     <article className={styles.book}>
       {isLoading ? loading :
@@ -43,8 +50,8 @@ function Book({id, title, author, year, pages, price, cover, ISBN, age_limit, ad
           <span className={styles.year}>{year}</span>
           <span className={styles.pages}>{pages} стр.</span>
         </div>
-        <Link to={`/${cover}`}>
-          <img className={styles.bookCover} src={`/img/books/${cover}.jpg`} alt="book" />
+        <Link to={`/${_id}`}>
+          <img className={styles.bookCover} src={`${axios.getUri()}/covers/${cover}`} alt="book" />
         </Link>
       </>}
     </article>
