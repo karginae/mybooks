@@ -1,0 +1,56 @@
+@import '/src/styles/hoverBrightness';
+
+.order {
+  display: flex;
+  justify-content: space-between;
+
+  .infoUser{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 650px;
+    padding: 0;
+    margin-top: 0;
+
+    li {
+      span {
+        display: block;
+        margin-bottom: 6px;
+      }
+      input {
+        width: 250px;
+      }
+      margin-bottom: 40px;
+    }
+  }
+  
+  .infoOrder {
+    align-self: flex-start;
+    width: 270px;
+    padding: 20px 30px;
+    background-color: #060222;
+    border-radius: 15px;
+  
+    .total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  
+    .toOrder {
+      width: 100%;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 25px;
+      padding: 15px;
+      text-align: center;
+      line-height: 1em;
+      background-color: #130D3D;
+      border-radius: 15px;
+      border: none;
+      @extend %hover-brightness;
+      cursor: pointer;
+    }
+  }
+}

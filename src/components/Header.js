@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Header(props) {
-
+  
   const [scrolled, setScrolled] = React.useState(null);
   const [isSearching, setIsSearching] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState('');
+
+  const favorites = useSelector((state) => state.favorites.data);
+  const cart = useSelector((state) => state.cart.data);
 
   window.onscroll = () => {
     window.scrollY ? setScrolled(true) : setScrolled(null);
@@ -14,6 +18,9 @@ function Header(props) {
   const clickSearch = () => {
     setIsSearching(!isSearching);
   };
+
+  const favoritesValue = () => (favorites?.length);
+  const cartValue = () => (cart?.length);
 
   const searching = (e) => {
     setSearchValue(e.target.value);
@@ -40,13 +47,13 @@ function Header(props) {
           <li className="favorite-logo">
             <Link to='/favorites'>
               <img src="/img/logo/favorite.svg" alt="favorite" />
-              <span>{props.favoritesValue}</span>
+              <span>{favoritesValue()}</span>
             </Link>
           </li>
           <li className="cart-logo">
             <Link to='/cart'>
               <img src="/img/logo/cart.svg" alt="cart" />
-              <span>{props.cartValue}</span>
+              <span>{cartValue()}</span>
             </Link>
           </li>
         </ul>

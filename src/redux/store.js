@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from './slices/authSlice';
-import addBookSlice from './slices/addBookSlice';
+import booksSlice from './slices/booksSlice';
+import favoritesSlice from './slices/favoritesSlice';
+import cartSlice from './slices/cartSlice';
 
 export default configureStore({
   reducer: {
     auth: authSlice,
-    addBook: addBookSlice,
+    books: booksSlice,
+    favorites: favoritesSlice,
+    cart: cartSlice,
   }
 })

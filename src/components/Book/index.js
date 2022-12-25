@@ -1,15 +1,19 @@
 import React from 'react';
 import ContentLoader from "react-content-loader";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Book.module.scss';
 import axios from '../../axios';
+import { fetchAddFavorite, fetchRemoveFavorite } from '../../redux/slices/favoritesSlice';
 
 function Book({_id, title, author, year, pages, price, cover, isbn, age_limit, addFavorite, removeFavorite, favoriteBooks, isLoading}) {
   const [like, setLike] = React.useState(false);
 
+  const dispatch = useDispatch();
+
   const isAuth = useSelector((state) => (Boolean(state.auth.data?.email)));
+  const favorites = useSelector(state => state.favorites.data);
 
   const loading = <ContentLoader 
     speed={2}
@@ -24,7 +28,8 @@ function Book({_id, title, author, year, pages, price, cover, isbn, age_limit, a
 
   const clickLike = () => {
     if (isAuth) {
-      like ? removeFavorite(_id) : addFavorite({_id});
+      // like ? removeFavorite(_id) : addFavorite({_id});
+      like ? dispatch(fetchRemoveFavorite(_id)) : dispatch(fetchAddFavorite({_id}));
       setLike(!like);
     }
     else {
@@ -32,9 +37,11 @@ function Book({_id, title, author, year, pages, price, cover, isbn, age_limit, a
     }
   };
 
-  if (isAuth && favoriteBooks.find((favoriteBook) => (favoriteBook.book._id === _id)) && like === false) {
-    setLike(true);
-  };
+  React.useEffect(() => {
+    if (isAuth && favorites?.find((favoriteBook) => (favoriteBook.book._id === _id)) && like === false) {
+      setLike(true);
+    };
+  }, [favorites]);
 
   return (
     <article className={styles.book}>

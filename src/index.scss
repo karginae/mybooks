@@ -113,6 +113,10 @@ header {
 main {
 	padding-top: 30px;
 
+	.errors {
+		color: #bf3131;
+	}
+
 	h2 {
 		font-size: 32px;
 		font-weight: 700;
@@ -168,9 +172,10 @@ main {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			align-self: start;
 			margin-left: 50px;
 			width: 243px;
-			height: 216px;
+			// height: 216px;
 			padding: 0 15px;
 			background-color: #0A071E;
 			border-radius: 15px;
@@ -204,6 +209,34 @@ main {
 				padding: 15px;
 				line-height: 1em;
 				background-color: #671A0F;
+				border-radius: 15px;
+				border: none;
+				@extend %hover-brightness;
+				cursor: pointer;
+			}
+
+			.delete {
+				width: 100%;
+				font-size: 16px;
+				font-weight: 700;
+				margin-bottom: 20px;
+				padding: 15px;
+				line-height: 1em;
+				background-color: #671A0F;
+				border-radius: 15px;
+				border: none;
+				@extend %hover-brightness;
+				cursor: pointer;
+			}
+
+			.update {
+				width: 100%;
+				font-size: 16px;
+				font-weight: 700;
+				margin-bottom: 20px;
+				padding: 15px;
+				line-height: 1em;
+				background-color: #674b0f;
 				border-radius: 15px;
 				border: none;
 				@extend %hover-brightness;

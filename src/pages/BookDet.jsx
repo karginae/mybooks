@@ -1,15 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from 'react-router-dom';
+
 
 import axios from '../axios'
 import Empty from "../components/Empty";
 import { selectorIsAuth } from "../redux/slices/authSlice";
+import { fetchRemoveBook } from "../redux/slices/booksSlice";
+import { fetchAddCart, fetchRemoveCart } from "../redux/slices/cartSlice";
 
-function BookDet({books, addCart, removeCart, cartBooks}) {
+function BookDet({addCart, removeCart, cartBooks}) {
+  const books = useSelector((state) => (state.books.data));
   const params = useParams();
 
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
   const isAuth = useSelector(selectorIsAuth);
+  const role = useSelector((state) => (state.auth.data?.role?.role));
 
   const getBook = () => (
     books.find((book) => (book._id === params.id))
@@ -21,7 +29,8 @@ function BookDet({books, addCart, removeCart, cartBooks}) {
 
   const clickAddCart = () => {
     if (isAuth) {
-      add ? removeCart(book._id) : addCart({_id: book._id});
+      // add ? removeCart(book._id) : addCart({_id: book._id});
+      add ? dispatch(fetchRemoveCart(book._id)) : dispatch(fetchAddCart({_id: book._id}));
       setAdd(!add);
     }
     else {
@@ -29,11 +38,24 @@ function BookDet({books, addCart, removeCart, cartBooks}) {
     }
   };
 
+  const deleteBook = async () => {
+    try {
+      await dispatch(fetchRemoveBook(book._id));
+      return window.location.replace('/');
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  const updateBook = async () => {
+    return navigate(`/${book._id}/edit`);
+  };
+
   React.useEffect(() => {
     if (isAuth && book && cartBooks.find((cartBook) => (cartBook.book._id === book._id)) && add === false) {
       setAdd(true);
     };
-  }, []);
+  }, [cartBooks]);
 
   return (
     <main>
@@ -55,7 +77,8 @@ function BookDet({books, addCart, removeCart, cartBooks}) {
               <div className="actions">
                 <span className="price">{book.price} &#8381;</span>
                 <input className="addToCart" type='submit' value={add ? 'Товар в корзине' : 'Добавить в корзину'} onClick={() => clickAddCart()} style={add ? {backgroundColor: '#0D3D0F'} : {backgroundColor: '#130D3D'}} />
-                <input className="addToFavorites" type='submit' value={add ? 'Товар в избранном' : 'Добавить в избранное'} onClick={() => clickAddCart()} style={add ? {backgroundColor: '#671A0F'} : {backgroundColor: '#671A0F'}} />
+                {role === 'admin' && <><input className="delete" type='submit' value={'Удалить книгу'} onClick={() => deleteBook()} />
+                <input className="update" type='submit' value={'Изменить книгу'} onClick={() => updateBook()} /></>}
               </div>
             </div>
           </>        
