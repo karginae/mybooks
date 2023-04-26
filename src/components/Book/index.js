@@ -7,11 +7,12 @@ import styles from './Book.module.scss';
 import axios from '../../axios';
 import { fetchAddFavorite, fetchRemoveFavorite } from '../../redux/slices/favoritesSlice';
 
-function Book({_id, title, author, year, pages, price, cover, isbn, age_limit, addFavorite, removeFavorite, favoriteBooks, isLoading}) {
+function Book({_id, title, author, year, pages, price, cover}) {
   const [like, setLike] = React.useState(false);
 
   const dispatch = useDispatch();
 
+  const booksLoaded = useSelector(state => state.books.status === 'loaded');
   const isAuth = useSelector((state) => (Boolean(state.auth.data?.email)));
   const favorites = useSelector(state => state.favorites.data);
 
@@ -45,7 +46,7 @@ function Book({_id, title, author, year, pages, price, cover, isbn, age_limit, a
 
   return (
     <article className={styles.book}>
-      {isLoading ? loading :
+      {!booksLoaded ? loading :
       <>
         <div className={styles.infoTop}>
           <span className={styles.price}>{price} &#8381;</span>

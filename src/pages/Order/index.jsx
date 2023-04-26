@@ -1,22 +1,19 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import React from 'react';
 import { useForm } from "react-hook-form";
+import { useSelector } from 'react-redux';
 
 import axios from '../../axios';
-import Empty from '../../components/Empty';
 
 import styles from './Order.module.scss';
 
-function Order({ cartBooks }) {
+function Order() {
+  const cartBooks = useSelector(state => state.cart.data);
+
   const submitOrder = React.useRef(null);
-  // const [orderBooks, setOrderBooks] = React.useState([]);
-  // const [orderTotal, setOrderTotal] = React.useState([]);
-  // const [orderUser, setOrderUser] = React.useState([]);
   const [orderStatus, setOrderStatus] = React.useState(null);
 
   const totalPrice = () => {
-    return cartBooks.reduce((prev, cartBook) => (prev + +cartBook.book.price), 0);
+    return cartBooks?.reduce((prev, cartBook) => (prev + +cartBook.book.price), 0);
   };
 
   const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
@@ -29,7 +26,7 @@ function Order({ cartBooks }) {
   const onSubmit = async (values) => {
     try {
       const order = {
-        orderBooks: (cartBooks.reduce((prev, cartBook) => [...prev, cartBook.book], [])),
+        orderBooks: (cartBooks?.reduce((prev, cartBook) => [...prev, cartBook.book], [])),
         totalPrice: totalPrice(),
         orderUser: values
       };
@@ -83,7 +80,7 @@ function Order({ cartBooks }) {
             <div className={styles.total}>
               <span>Сумма заказа:</span><span>{totalPrice()} &#8381;</span>
             </div>
-            <input onClick={() => submitOrder.current.click()} type="submit" className={styles.toOrder} value="Оформить заказ" />
+            <input onClick={() => submitOrder.current.click()} disabled={!isValid} type="submit" className={styles.toOrder} value="Оформить заказ" />
           </div>
         </div>
       </div>

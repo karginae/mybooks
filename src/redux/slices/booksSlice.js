@@ -2,39 +2,39 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../../axios';
 
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async () => {
-  try {
+  // try {
     const { data } = await axios.get('/books');
     return data;
-  } catch (error) {
-    return error.response.data;
-  }
+  // } catch (error) {
+  //   return error.response.data;
+  // }
 });
 
 export const fetchAddBook = createAsyncThunk('books/fetchAddBook', async (params) => {
-  try {
+  // try {
     const { data } = await axios.post('/books', params);
     return data;
-  } catch (error) {
-    return error.response.data;
-  }
+  // } catch (error) {
+  //   return error.response.data;
+  // }
 });
 
 export const fetchUpdateBook = createAsyncThunk('books/fetchUpdateBook', async (params) => {
-  try {
+  // try {
     const { data } = await axios.patch(`/books/${params.id}`, params.values);
     return data;
-  } catch (error) {
-    return error.response.data;
-  }
+  // } catch (error) {
+  //   return error.response.data;
+  // }
 });
 
 export const fetchRemoveBook = createAsyncThunk('books/fetchRemoveBook', async (id) => {
-  try {
+  // try {
     const { data } = await axios.delete(`/books/${id}`);
     return data;
-  } catch (error) {
-    return error.response.data;
-  }
+  // } catch (error) {
+  //   return error.response.data;
+  // }
 });
 
 const initialState = {

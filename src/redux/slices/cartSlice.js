@@ -2,30 +2,30 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../../axios';
 
 export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
-  try {
+  // try {
     const { data } = await axios.get('/cart');
     return data;
-  } catch (error) {
-    return error.response.data;
-  }
+  // } catch (error) {
+  //   return error.response.data;
+  // }
 });
 
 export const fetchAddCart = createAsyncThunk('cart/fetchAddCart', async (id) => {
-  try {
+  // try {
     const { data } = await axios.post('/cart', id);
     return data;
-  } catch (error) {
-    return error.response.data;
-  }
+  // } catch (error) {
+  //   return error.response.data;
+  // }
 });
 
 export const fetchRemoveCart = createAsyncThunk('favorites/fetchRemoveCart', async (id) => {
-  try {
+  // try {
     const { data } = await axios.delete(`/cart/${id}`);
     return data;
-  } catch (error) {
-    return error.response.data;
-  }
+  // } catch (error) {
+  //   return error.response.data;
+  // }
 });
 
 const initialState = {
