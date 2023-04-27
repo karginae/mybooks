@@ -1,10 +1,11 @@
 @import '/src/styles/hoverBrightness';
+@import '/src/styles/hiddenInfo';
 
 .order {
   display: flex;
   justify-content: space-between;
 
-  .infoUser{
+  .infoUser {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -23,21 +24,67 @@
       margin-bottom: 40px;
     }
   }
-  
+
   .infoOrder {
     align-self: flex-start;
     width: 270px;
     padding: 20px 30px;
     background-color: #060222;
     border-radius: 15px;
-  
+
+    .book {
+      display: flex;
+      margin-bottom: 25px;
+      height: 112px;
+
+      .cover {
+        margin-right: 20px;
+        width: 70px;
+        overflow: hidden;
+
+        .image {
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .info {
+        margin: 0;
+        padding: 0;
+        position: relative;
+        width: 120px;
+
+        .title {
+          @extend %hidden-info;
+          margin-top: 5px;
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .author {
+          @extend %hidden-info;
+          margin-top: 10px;
+          font-size: 12px;
+          font-weight: 400;
+        }
+
+        .price {
+          position: absolute;
+          right: 0;
+          bottom: 5px;
+          font-size: 16px;
+          font-weight: 700;
+        }
+      }
+    }
+
     .total {
       display: flex;
       justify-content: space-between;
       font-size: 16px;
       font-weight: 700;
     }
-  
+
     .toOrder {
       width: 100%;
       font-size: 16px;
@@ -46,7 +93,7 @@
       padding: 15px;
       text-align: center;
       line-height: 1em;
-      background-color: #130D3D;
+      background-color: #130d3d;
       border-radius: 15px;
       border: none;
       @extend %hover-brightness;

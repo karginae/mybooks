@@ -1,15 +1,20 @@
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 
-import { fetchAuth, logout } from "../redux/slices/authSlice";
+import { fetchAuth, logout } from '../redux/slices/authSlice';
 
 function Auth() {
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => (Boolean(state.auth.data?.email)));
-  const role = useSelector((state) => (state.auth.data?.role?.role));
+  const isAuth = useSelector((state) => Boolean(state.auth.data?.email));
+  const role = useSelector((state) => state.auth.data?.role?.role);
 
-  const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isValid },
+  } = useForm({
     defaultValues: {
       email: '',
       password: '',
@@ -22,13 +27,13 @@ function Auth() {
       const data = await dispatch(fetchAuth(values));
       if (!data.payload.email) {
         return data.payload.forEach(({ msg, param }) => setError(param, { message: msg }));
-      }
-      else if ('token' in data.payload) {
+      } else if ('token' in data.payload) {
+        window.location.replace('/');
         window.localStorage.setItem('token', data.payload.token);
-        document.location.reload();
+        // document.location.reload();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -43,29 +48,46 @@ function Auth() {
       <main>
         <div className="container">
           <div onClick={() => onLogout()}>Выйти</div>
-          {role === 'admin' ? <Link to='/create-book'><div>Создать книгу</div></Link> : null}
+          {role === 'admin' ? (
+            <Link to="/create-book">
+              <div>Создать книгу</div>
+            </Link>
+          ) : null}
         </div>
-      </main>);
+      </main>
+    );
   }
 
   return (
     <main>
-      <div className='container'>
+      <div className="container">
         <h2>Вход</h2>
         <div className="auth">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div htmlFor="">Ошибки сервера: {errors.server?.message}</div>
             <div htmlFor="">Ошибки почты: {errors.email?.message}</div>
             <div htmlFor="">Ошибка пароля: {errors.password?.message}</div>
-            <input className="input" type="email" placeholder="Почта" {...register('email', { required: 'Укажите почту' })} />
-            <input className="input" type="password" placeholder="Пароль" {...register('password', { required: 'Укажите пароль' })} />
+            <input
+              className="input"
+              type="email"
+              placeholder="Почта"
+              {...register('email', { required: 'Укажите почту' })}
+            />
+            <input
+              className="input"
+              type="password"
+              placeholder="Пароль"
+              {...register('password', { required: 'Укажите пароль' })}
+            />
             <input type="submit" disabled={!isValid} />
-            <Link to='/registration'><div>Зарегистрироваться</div></Link>
+            <Link to="/registration">
+              <div>Зарегистрироваться</div>
+            </Link>
           </form>
         </div>
       </div>
     </main>
   );
-};
+}
 
 export default Auth;
