@@ -110,7 +110,7 @@ const favoritesSlice = createSlice({
         state.status = 'error';
       })
       .addCase(fetchRemoveFavorite.pending, (state) => {
-        state.status = 'loading';
+        // state.status = 'loading';
       })
       .addCase(fetchRemoveFavorite.fulfilled, (state, action) => {
         state.data = state.data.filter(
