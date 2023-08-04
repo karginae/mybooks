@@ -1,5 +1,6 @@
 @import '/src/styles/hoverBrightness';
 @import '/src/styles/hiddenInfo';
+@import '/src/styles/disabled';
 
 .order {
   display: flex;
@@ -14,14 +15,24 @@
     margin-top: 0;
 
     li {
-      span {
+      position: relative;
+      margin-bottom: 40px;
+
+      .fieldName {
         display: block;
         margin-bottom: 6px;
       }
+
       input {
         width: 250px;
       }
-      margin-bottom: 40px;
+
+      .message {
+        display: block;
+        position: absolute;
+        bottom: -25px;
+        white-space: nowrap;
+      }
     }
   }
 
@@ -98,6 +109,14 @@
       border: none;
       @extend %hover-brightness;
       cursor: pointer;
+
+      &.loading {
+        @extend %disabled;
+      }
+
+      &:disabled {
+        @extend %disabled;
+      }
     }
   }
 }

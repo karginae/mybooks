@@ -19,7 +19,7 @@ function Favorites() {
               <Empty
                 title={'Нет избранных товаров'}
                 description={'Для добавления товаров в избранное необходимо быть авторизованным'}
-                button={{ text: 'Войти/Зарегестрироваться', src: '/auth' }}
+                button={{ text: 'Войти/Зарегистрироваться', src: '/auth' }}
               />
             ) : favorites.data.length === 0 ? (
               <Empty

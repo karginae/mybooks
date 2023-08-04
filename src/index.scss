@@ -23,6 +23,7 @@ a {
 
 input {
   outline: none;
+  border: none;
 }
 
 body {
@@ -114,7 +115,7 @@ main {
   padding-top: 30px;
 
   .errors {
-    color: #bf3131;
+    color: #b22c2c;
   }
 
   h2 {
@@ -124,6 +125,7 @@ main {
   }
 
   .input {
+    transition: border 0.25s ease-in-out;
     width: 210px;
     padding: 10px 20px;
     font-size: 16px;
@@ -131,6 +133,10 @@ main {
     background-color: #030016;
     border: 1px solid #29263e;
     border-radius: 10px;
+
+    &.invalid {
+      border: 1px solid #bf3131;
+    }
   }
 
   .books {

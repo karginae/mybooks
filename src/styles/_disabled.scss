@@ -1,0 +1,7 @@
+%disabled {
+  background-color: rgb(87, 87, 87);
+  cursor: default;
+  &:hover {
+    filter: brightness(1);
+  }
+}

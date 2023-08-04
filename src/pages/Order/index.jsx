@@ -12,6 +12,7 @@ function Order() {
 
   const submitOrder = React.useRef(null);
   const [orderStatus, setOrderStatus] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const totalPrice = () => {
     return cartBooks?.reduce((prev, cartBook) => prev + +cartBook.book.price, 0);
@@ -30,22 +31,25 @@ function Order() {
   });
 
   const onSubmit = async (values) => {
+    setIsLoading(true);
     try {
       const order = {
         orderBooks: cartBooks?.reduce((prev, cartBook) => [...prev, cartBook.book], []),
         totalPrice: totalPrice(),
-        orderUser: values,
+        ...values,
       };
       const { data } = await axios.post(`/order`, order);
       if (data.totalPrice) {
         setOrderStatus(true);
       } else {
+        setIsLoading(false);
         return data.forEach(({ msg, param }) => setError(param, { message: msg }));
       }
     } catch (error) {
       console.log(error.response.data);
       setOrderStatus(false);
     }
+    setIsLoading(false);
   };
 
   if (orderStatus === true) {
@@ -62,58 +66,49 @@ function Order() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <ul className={styles.infoUser}>
               <li>
-                <span>Имя</span>
+                <span className={styles.fieldName}>Имя</span>
                 <input
-                  className="input"
+                  className={errors?.name?.message ? 'input invalid' : 'input'}
                   type="text"
                   placeholder="Имя"
                   {...register('name', { required: 'Укажите имя' })}
                 />
+                <span className={`${styles.message} errors`}>{errors?.name?.message}</span>
               </li>
               <li>
-                <span>Фамилия</span>
+                <span className={styles.fieldName}>Фамилия</span>
                 <input
-                  className="input"
+                  className={errors?.surname?.message ? 'input invalid' : 'input'}
                   type="text"
                   placeholder="Фамилия"
                   {...register('surname', { required: 'Укажите фамилию' })}
                 />
+                <span className={`${styles.message} errors`}>{errors?.surname?.message}</span>
               </li>
               <li>
-                <span>Номер телефона</span>
+                <span className={styles.fieldName}>Номер телефона</span>
                 <input
-                  className="input"
+                  className={errors?.tel?.message ? 'input invalid' : 'input'}
                   type="tel"
                   placeholder="+7"
-                  max={11}
                   {...register('tel', { required: 'Укажите номер телефона' })}
                 />
+                <span className={`${styles.message} errors`}>{errors?.tel?.message}</span>
               </li>
               <li>
-                <span>Почта</span>
+                <span className={styles.fieldName}>Почта</span>
                 <input
-                  className="input"
+                  className={errors?.email?.message ? 'input invalid' : 'input'}
                   placeholder="example@mail.ru"
                   type="email"
                   {...register('email', { required: 'Укажите электронную почту' })}
                 />
+                <span className={`${styles.message} errors`}>{errors?.email?.message}</span>
               </li>
             </ul>
-            <div className="errors">
-              {errors.server?.message}
-              <br />
-              {errors.name?.message}
-              <br />
-              {errors.surname?.message}
-              <br />
-              {errors.tel?.message}
-              <br />
-              {errors.email?.message}
-              <br />
-              {errors.books?.message}
-              <br />
-              {errors.totalPrice?.message}
-            </div>
+            {/* <div className="errors">
+              {Object.keys(errors).map((param) => errors[param].message)}
+            </div> */}
             <input type="submit" ref={submitOrder} hidden />
           </form>
           <div className={styles.infoOrder}>
@@ -143,7 +138,7 @@ function Order() {
               onClick={() => submitOrder.current.click()}
               disabled={!isValid}
               type="submit"
-              className={styles.toOrder}
+              className={`${styles.toOrder} ${isLoading ? styles.loading : null}`}
               value="Оформить заказ"
             />
           </div>
