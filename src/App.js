@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
 
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import Cart from './pages/Cart';
@@ -52,7 +53,7 @@ function App() {
     book.author.toLowerCase().includes(searchValue.toLowerCase());
 
   return (
-    <div>
+    <div className="body">
       <Header getSearchValue={(obj) => setSearchValue(obj)} />
       <Routes>
         <Route path="/" element={<Home searchFilter={searchFilter} />} />
@@ -65,6 +66,7 @@ function App() {
         <Route path="/order" element={<Order />} />
         <Route path="/:id" element={!booksLoaded ? null : <BookDet />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 @import '/src/styles/hoverBrightness';
 
 .book {
-  $info-color: #D4D7E3;
+  $info-color: #d4d7e3;
 
   position: relative;
   width: 208px;
@@ -17,18 +17,24 @@
     margin-right: 0;
   }
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     transform: translateY(-4px);
 
-    .infoTop, .infoBottom {
+    .infoTop,
+    .infoBottom {
       opacity: 1;
-      animation: info .3s ease-out;
+      animation: info 0.3s ease-out;
     }
   }
-  
+
   @keyframes info {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   %info {
@@ -44,7 +50,7 @@
     display: flex;
     justify-content: space-between;
     height: 50px;
-    
+
     .price {
       display: block;
       margin: auto 0;
@@ -58,8 +64,7 @@
       height: 19px;
       object-fit: contain;
       @extend %hover-brightness;
-      transition: filter .2s ease-in-out, transform 0.1s ease-in-out;
-
+      transition: filter 0.2s ease-in-out, transform 0.1s ease-in-out;
 
       &:active {
         transform: scale(0.93);

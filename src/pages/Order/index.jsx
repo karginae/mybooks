@@ -48,8 +48,9 @@ function Order() {
     } catch (error) {
       console.log(error.response.data);
       setOrderStatus(false);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   if (orderStatus === true) {
