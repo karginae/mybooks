@@ -7,15 +7,9 @@
   width: 208px;
   height: 325px;
   background-color: rgba(0, 0, 0, 0);
-  margin-right: 60px;
-  margin-bottom: 50px;
   overflow: hidden;
   transition: transform 0.3s ease-out;
   cursor: pointer;
-
-  &:nth-child(4n) {
-    margin-right: 0;
-  }
 
   &:hover,
   &:focus-within {
@@ -43,6 +37,11 @@
     width: 100%;
     background-color: rgba(3, 0, 26, 0.75);
     padding: 0 15px;
+  }
+
+  .bookCover {
+    height: 100%;
+    object-fit: cover;
   }
 
   .infoTop {
@@ -113,10 +112,5 @@
       @extend %hidden-info;
       color: $info-color;
     }
-  }
-
-  .bookCover {
-    height: 100%;
-    object-fit: cover;
   }
 }

@@ -10,26 +10,26 @@ $info-color: #fff;
   .cartItem {
     display: flex;
     margin-bottom: 40px;
-  
-    .cartBook { 
+
+    .cartBook {
       width: 170px;
       height: 270px;
       background-color: rgba(0, 0, 0, 0);
       margin-right: 100px;
       overflow: hidden;
       cursor: pointer;
-    
+
       .bookCover {
         height: 100%;
         object-fit: cover;
       }
     }
-    
+
     .infoBook {
       width: 320px;
       margin: 15px 100px 15px 0;
       padding: 0;
-    
+
       %hidden-info {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -37,51 +37,51 @@ $info-color: #fff;
         font-size: 16px;
         font-weight: 400;
       }
-    
+
       .title {
         @extend %hidden-info;
         font-weight: 700;
         margin-bottom: 25px;
         color: $info-color;
       }
-    
+
       .author {
         @extend %hidden-info;
         margin-bottom: 25px;
         color: $info-color;
       }
-    
+
       .year {
         @extend %hidden-info;
         margin-bottom: 25px;
         color: $info-color;
       }
-    
+
       .pages {
         @extend %hidden-info;
         margin-bottom: 25px;
         color: $info-color;
       }
-    
+
       .isbn {
         @extend %hidden-info;
         margin-bottom: 25px;
         color: $info-color;
       }
-    
+
       .age_limit {
         @extend %hidden-info;
         color: $info-color;
       }
     }
-  
+
     .price {
       font-size: 16px;
       font-weight: 700;
       align-self: center;
     }
   }
-  
+
   .actions {
     position: absolute;
     right: 0;
@@ -96,7 +96,7 @@ $info-color: #fff;
       font-size: 16px;
       font-weight: 700;
     }
-  
+
     .toOrder {
       width: 100%;
       font-size: 16px;
@@ -105,7 +105,7 @@ $info-color: #fff;
       padding: 15px;
       text-align: center;
       line-height: 1em;
-      background-color: #130D3D;
+      background-color: #130d3d;
       border-radius: 15px;
       border: none;
       @extend %hover-brightness;
