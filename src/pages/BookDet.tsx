@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import axios from '../axios';
@@ -7,27 +7,28 @@ import Empty from '../components/Empty';
 import { selectorIsAuth } from '../redux/slices/authSlice';
 import { fetchRemoveBook } from '../redux/slices/booksSlice';
 import { fetchAddCart, fetchRemoveCart } from '../redux/slices/cartSlice';
+import { RootState, useAppDispatch } from '../redux/store';
 
-function BookDet() {
-  const books = useSelector((state) => state.books.data);
-  const cartBooks = useSelector((state) => state.cart.data);
+const BookDet: React.FC = () => {
+  const books = useSelector((state: RootState) => state.books.data);
+  const cartBooks = useSelector((state: RootState) => state.cart.data);
 
   const params = useParams();
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isAuth = useSelector(selectorIsAuth);
-  const role = useSelector((state) => state.auth.data?.role?.role);
+  const role = useSelector((state: RootState) => state.auth.data?.role);
 
-  const getBook = () => books.find((book) => book._id === params.id);
+  const getBook = () => books?.find((book) => book._id === params.id);
 
   const book = getBook();
 
   const [add, setAdd] = React.useState(false);
 
   const clickAddCart = () => {
-    if (isAuth) {
+    if (isAuth && book) {
       add ? dispatch(fetchRemoveCart(book._id)) : dispatch(fetchAddCart({ _id: book._id }));
       setAdd(!add);
     } else {
@@ -37,15 +38,15 @@ function BookDet() {
 
   const deleteBook = async () => {
     try {
-      await dispatch(fetchRemoveBook(book._id));
+      book && (await dispatch(fetchRemoveBook(book._id)));
       return window.location.replace('/');
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.response.data);
     }
   };
 
   const updateBook = async () => {
-    return navigate(`/${book._id}/edit`);
+    return book && navigate(`/${book._id}/edit`);
   };
 
   React.useEffect(() => {
@@ -115,7 +116,7 @@ function BookDet() {
                 <input
                   className="addToCart"
                   type="submit"
-                  value={add ? 'Товар в корзине' : 'Добавить в корзину'}
+                  value={add ? 'Удалить из корзины' : 'Добавить в корзину'}
                   onClick={() => clickAddCart()}
                   style={add ? { backgroundColor: '#0D3D0F' } : { backgroundColor: '#130D3D' }}
                 />
@@ -142,6 +143,6 @@ function BookDet() {
       </div>
     </main>
   );
-}
+};
 
 export default BookDet;

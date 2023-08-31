@@ -68,11 +68,26 @@ header {
   width: 380px;
   display: flex;
 
-  .burger {
-    height: 26px;
+  .button-burger {
+    background-color: transparent;
+    border: none;
+    padding: 0;
     margin: auto 0;
     cursor: pointer;
     @extend %hover-brightness;
+
+    .burger {
+      height: 26px;
+      margin: auto 0;
+    }
+  }
+
+  .burger-genres {
+    position: absolute;
+    padding: 10px 30px;
+    bottom: -30px;
+    background-color: #130d3d;
+    border-radius: 10px;
   }
 }
 
@@ -158,6 +173,7 @@ main {
         color: #fff;
         background-color: #130d3d;
         border: none;
+        transition: all 0.3s ease-out 0s;
 
         &:hover {
           @extend %hover-brightness;
@@ -172,7 +188,7 @@ main {
 
   .books {
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 208px);
     justify-content: space-between;
     row-gap: 50px;
     padding: 0 64px;
@@ -338,7 +354,7 @@ footer {
 @media only screen and (max-width: 1060px) {
   main {
     .books {
-      grid-template-columns: repeat(3, auto);
+      grid-template-columns: repeat(3, 208px);
       row-gap: 40px;
       justify-content: space-around;
       padding: 0;
@@ -356,7 +372,7 @@ footer {
 @media only screen and (max-width: 812px) {
   main {
     .books {
-      grid-template-columns: repeat(2, auto);
+      grid-template-columns: repeat(2, 208px);
       row-gap: 30px;
       justify-content: space-around;
     }

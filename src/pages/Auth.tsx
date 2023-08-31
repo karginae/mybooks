@@ -1,20 +1,23 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { fetchAuth, logout } from '../redux/slices/authSlice';
+import { RootState, useAppDispatch } from '../redux/store';
+import { UserAuth } from '../redux/types/authType';
 
-function Auth() {
-  const dispatch = useDispatch();
-  const isAuth = useSelector((state) => Boolean(state.auth.data?.email));
-  const role = useSelector((state) => state.auth.data?.role?.role);
+const Auth: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const isAuth = useSelector((state: RootState) => Boolean(state.auth.data?.email));
+  const role = useSelector((state: RootState) => state.auth.data?.role);
 
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<UserAuth & { server?: string }>({
     defaultValues: {
       email: '',
       password: '',
@@ -22,11 +25,13 @@ function Auth() {
     mode: 'onChange',
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: UserAuth) => {
     try {
-      const data = await dispatch(fetchAuth(values));
+      const data: any = await dispatch(fetchAuth(values));
       if (!data.payload.email) {
-        return data.payload.forEach(({ msg, param }) => setError(param, { message: msg }));
+        return data.payload.forEach(({ msg, param }: { msg: string; param: any }) =>
+          setError(param, { message: msg }),
+        );
       } else if ('token' in data.payload) {
         window.location.replace('/');
         window.localStorage.setItem('token', data.payload.token);
@@ -38,7 +43,7 @@ function Auth() {
   };
 
   const onLogout = () => {
-    document.location.reload();
+    document.location.replace('/');
     window.localStorage.removeItem('token');
     dispatch(logout());
   };
@@ -64,9 +69,9 @@ function Auth() {
         <h2>Вход</h2>
         <div className="auth">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div htmlFor="">Ошибки сервера: {errors.server?.message}</div>
-            <div htmlFor="">Ошибки почты: {errors.email?.message}</div>
-            <div htmlFor="">Ошибка пароля: {errors.password?.message}</div>
+            <div>Ошибки сервера: {errors.server?.message}</div>
+            <div>Ошибки почты: {errors.email?.message}</div>
+            <div>Ошибка пароля: {errors.password?.message}</div>
             <input
               className="input"
               type="email"
@@ -88,6 +93,6 @@ function Auth() {
       </div>
     </main>
   );
-}
+};
 
 export default Auth;

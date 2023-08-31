@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
-import qs from 'qs';
+import { useSelector } from 'react-redux';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -18,19 +16,18 @@ import { fetchAuthMe } from './redux/slices/authSlice';
 import { fetchBooks } from './redux/slices/booksSlice';
 import { fetchFavorites } from './redux/slices/favoritesSlice';
 import { fetchCart } from './redux/slices/cartSlice';
+import { RootState, useAppDispatch } from './redux/store';
+import { BookData } from './redux/types/booksType';
 
 function App() {
-  const booksLoaded = useSelector((state) => state.books.status === 'loaded');
-  const [searchValue, setSearchValue] = React.useState('');
+  const booksLoaded: boolean = useSelector((state: RootState) => state.books.status === 'loaded');
+  const [searchValue, setSearchValue] = React.useState<string>('');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     try {
-      const data = dispatch(fetchAuthMe());
-      // if (!data.email) {
-      //   console.log('Ошибка авторизации!');
-      // }
+      dispatch(fetchAuthMe());
     } catch (error) {
       console.log('Ошибка авторизации');
     }
@@ -48,13 +45,13 @@ function App() {
     loadBooks();
   }, []);
 
-  const searchFilter = (book) =>
+  const searchFilter = (book: BookData) =>
     book.title.toLowerCase().includes(searchValue.toLowerCase()) ||
     book.author.toLowerCase().includes(searchValue.toLowerCase());
 
   return (
     <div className="body">
-      <Header getSearchValue={(obj) => setSearchValue(obj)} />
+      <Header getSearchValue={(value: string) => setSearchValue(value)} />
       <Routes>
         <Route path="/" element={<Home searchFilter={searchFilter} />} />
         <Route path="/registration" element={<Registration />} />

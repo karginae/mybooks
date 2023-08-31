@@ -1,22 +1,23 @@
 import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import axios from '../../axios';
 import { fetchAddBook, fetchUpdateBook } from '../../redux/slices/booksSlice';
 
 import styles from './CreateBook.module.scss';
+import { RootState, useAppDispatch } from '../../redux/store';
+import { BookInit } from '../../redux/types/booksType';
 
-function CreateBook() {
+const CreateBook: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const params = useParams();
-  const isEditing = Boolean(params.id);
 
-  const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.data?.email);
-  const isAuthLoaded = useSelector((state) => state.auth.status === 'loaded' || null);
-  const role = useSelector((state) => state.auth.data?.role?.role);
+  const dispatch = useAppDispatch();
+  const isAuth = useSelector((state: RootState) => state.auth.data?.email);
+  const isAuthLoaded = useSelector((state: RootState) => state.auth.status === 'loaded' || null);
+  const role = useSelector((state: RootState) => state.auth.data?.role);
 
   React.useEffect(() => {
     if (params.id) {
@@ -44,21 +45,21 @@ function CreateBook() {
     setError,
     setValue,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<BookInit>({
     defaultValues: {
       cover: '',
     },
     mode: 'onChange',
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: BookInit) => {
     setIsLoading(true);
     try {
-      let file;
+      let file: File | boolean;
       let fileExt;
-
-      if (values.cover[0]?.name) {
-        file = values.cover[0];
+      const coverFileList = values.cover as FileList;
+      if (coverFileList[0].name) {
+        file = coverFileList[0];
         fileExt = file.name.split('.').pop();
         if (!(fileExt === 'jpg' || fileExt === 'jpeg')) {
           setIsLoading(false);
@@ -71,9 +72,10 @@ function CreateBook() {
         file = false;
       }
 
-      const res = isEditing
+      const res: any = params.id
         ? await dispatch(fetchUpdateBook({ values, id: params.id }))
         : await dispatch(fetchAddBook(values));
+      console.log(res);
 
       if (res.payload?.title || res.payload?.acknowledged) {
         if (file) {
@@ -87,12 +89,14 @@ function CreateBook() {
             return setError('cover', { message: 'Ошибка загрузки обложки' });
           }
         }
-        isEditing
+        params.id
           ? window.location.replace(`/${params.id}`)
           : window.location.replace(`/${res.payload._id}`);
       } else {
         setIsLoading(false);
-        return res.payload.forEach(({ msg, param }) => setError(param, { message: msg }));
+        return res.payload.forEach(({ msg, param }: { msg: string; param: any }) =>
+          setError(param, { message: msg }),
+        );
       }
     } catch (error) {
       console.log(error);
@@ -228,6 +232,6 @@ function CreateBook() {
       </main>
     )
   );
-}
+};
 
 export default CreateBook;

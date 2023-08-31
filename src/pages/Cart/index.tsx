@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -5,11 +6,12 @@ import axios from '../../axios';
 import Empty from '../../components/Empty';
 
 import styles from './Cart.module.scss';
+import { RootState } from '../../redux/store';
 
-function Cart() {
-  const cartBooks = useSelector((state) => state.cart);
+const Cart: React.FC = () => {
+  const cartBooks = useSelector((state: RootState) => state.cart);
   const totalPrice = () =>
-    cartBooks.data.reduce((prev, cartBook) => prev + +cartBook.book.price, 0);
+    cartBooks.data?.reduce((prev, cartBook) => prev + +cartBook.book.price, 0);
 
   return (
     <main>
@@ -72,6 +74,6 @@ function Cart() {
       </div>
     </main>
   );
-}
+};
 
 export default Cart;

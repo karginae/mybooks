@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 
 import Book from '../components/Book';
 import Empty from '../components/Empty';
+import { RootState } from '../redux/store';
 
-function Favorites() {
-  const favorites = useSelector((state) => state.favorites);
+const Favorites: React.FC = () => {
+  const favorites = useSelector((state: RootState) => state.favorites);
 
   return (
     <main>
@@ -36,6 +37,6 @@ function Favorites() {
       </div>
     </main>
   );
-}
+};
 
 export default Favorites;

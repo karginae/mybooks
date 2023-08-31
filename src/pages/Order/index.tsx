@@ -6,13 +6,22 @@ import { useSelector } from 'react-redux';
 import axios from '../../axios';
 
 import styles from './Order.module.scss';
+import { RootState } from '../../redux/store';
+import { BookData } from '../../redux/types/booksType';
 
-function Order() {
-  const cartBooks = useSelector((state) => state.cart.data);
+interface IOrder {
+  name: string;
+  surname: string;
+  tel: string;
+  email: string;
+}
 
-  const submitOrder = React.useRef(null);
-  const [orderStatus, setOrderStatus] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
+const Order: React.FC = () => {
+  const cartBooks = useSelector((state: RootState) => state.cart.data);
+
+  const submitOrder = React.useRef<HTMLInputElement>(null);
+  const [orderStatus, setOrderStatus] = React.useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const totalPrice = () => {
     return cartBooks?.reduce((prev, cartBook) => prev + +cartBook.book.price, 0);
@@ -23,18 +32,18 @@ function Order() {
     handleSubmit,
     setError,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<IOrder>({
     defaultValues: {
       tel: '+7',
     },
     mode: 'onChange',
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: IOrder) => {
     setIsLoading(true);
     try {
       const order = {
-        orderBooks: cartBooks?.reduce((prev, cartBook) => [...prev, cartBook.book], []),
+        orderBooks: cartBooks?.reduce((prev: BookData[], cartBook) => [...prev, cartBook.book], []),
         totalPrice: totalPrice(),
         ...values,
       };
@@ -43,9 +52,11 @@ function Order() {
         setOrderStatus(true);
       } else {
         setIsLoading(false);
-        return data.forEach(({ msg, param }) => setError(param, { message: msg }));
+        return data.forEach(({ msg, param }: { msg: string; param: any }) =>
+          setError(param, { message: msg }),
+        );
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.response.data);
       setOrderStatus(false);
     } finally {
@@ -136,7 +147,7 @@ function Order() {
               <span>{totalPrice()} &#8381;</span>
             </div>
             <input
-              onClick={() => submitOrder.current.click()}
+              onClick={() => submitOrder.current?.click()}
               disabled={!isValid}
               type="submit"
               className={`${styles.toOrder} ${isLoading ? styles.loading : null}`}
@@ -147,6 +158,6 @@ function Order() {
       </div>
     </main>
   );
-}
+};
 
 export default Order;

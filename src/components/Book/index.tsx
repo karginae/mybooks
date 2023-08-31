@@ -1,20 +1,31 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import styles from './Book.module.scss';
 import axios from '../../axios';
 import { fetchAddFavorite, fetchRemoveFavorite } from '../../redux/slices/favoritesSlice';
+import { RootState, useAppDispatch } from '../../redux/store';
 
-function Book({ _id, title, author, year, pages, price, cover }) {
+type BookProps = {
+  _id: string;
+  title: string;
+  author: string;
+  year: string;
+  pages: string;
+  price: string;
+  cover: string | FileList;
+};
+
+const Book: React.FC<BookProps> = ({ _id, title, author, year, pages, price, cover }) => {
   const [like, setLike] = React.useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const booksLoaded = useSelector((state) => state.books.status === 'loaded');
-  const isAuth = useSelector((state) => Boolean(state.auth.data?.email));
-  const favorites = useSelector((state) => state.favorites.data);
+  const booksLoaded = useSelector((state: RootState) => state.books.status === 'loaded');
+  const isAuth = useSelector((state: RootState) => Boolean(state.auth.data?.email));
+  const favorites = useSelector((state: RootState) => state.favorites.data);
 
   const loading = (
     <ContentLoader
@@ -81,6 +92,6 @@ function Book({ _id, title, author, year, pages, price, cover }) {
       )}
     </article>
   );
-}
+};
 
 export default Book;
