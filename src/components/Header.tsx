@@ -9,7 +9,7 @@ type HeaderProps = {
   getSearchValue: (value: string) => void;
 };
 
-const Header: React.FC<HeaderProps> = ({ getSearchValue }) => {
+export const Header: React.FC<HeaderProps> = ({ getSearchValue }) => {
   const [scrolled, setScrolled] = React.useState<boolean>(false);
   const [isSearching, setIsSearching] = React.useState<boolean>(false);
   const [searchValue, setSearchValue] = React.useState<string>('');
@@ -159,5 +159,3 @@ const Header: React.FC<HeaderProps> = ({ getSearchValue }) => {
     </header>
   );
 };
-
-export default Header;

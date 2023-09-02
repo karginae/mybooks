@@ -18,7 +18,7 @@ type BookProps = {
   cover: string | FileList;
 };
 
-const Book: React.FC<BookProps> = ({ _id, title, author, year, pages, price, cover }) => {
+export const Book: React.FC<BookProps> = ({ _id, title, author, year, pages, price, cover }) => {
   const [like, setLike] = React.useState(false);
 
   const dispatch = useAppDispatch();
@@ -93,5 +93,3 @@ const Book: React.FC<BookProps> = ({ _id, title, author, year, pages, price, cov
     </article>
   );
 };
-
-export default Book;

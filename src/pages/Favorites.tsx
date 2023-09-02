@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Book from '../components/Book';
-import Empty from '../components/Empty';
+import { Book, Empty } from '../components';
 import { RootState } from '../redux/store';
 
 const Favorites: React.FC = () => {

@@ -8,7 +8,7 @@ export type ButtonProps = {
   width?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ text, src, width }) => {
+export const Button: React.FC<ButtonProps> = ({ text, src, width }) => {
   return (
     <Link to={`${src}`}>
       <input
@@ -22,5 +22,3 @@ const Button: React.FC<ButtonProps> = ({ text, src, width }) => {
     </Link>
   );
 };
-
-export default Button;

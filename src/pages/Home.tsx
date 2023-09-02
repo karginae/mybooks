@@ -1,9 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Book from '../components/Book';
-import Empty from '../components/Empty';
-import ErrorBoundary from '../components/ErrorBoundary';
+import { Book, Empty, ErrorBoundary } from '../components';
 import { RootState } from '../redux/store';
 import { BookData } from '../redux/types/booksType';
 

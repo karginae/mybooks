@@ -143,6 +143,17 @@ main {
     color: #b22c2c;
   }
 
+  .fallback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    span {
+      font-size: 20px;
+    }
+  }
+
   h2 {
     font-size: 32px;
     font-weight: 700;

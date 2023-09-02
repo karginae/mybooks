@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import axios from '../../axios';
-import Empty from '../../components/Empty';
+import { Empty } from '../../components';
 
 import styles from './Cart.module.scss';
 import { RootState } from '../../redux/store';

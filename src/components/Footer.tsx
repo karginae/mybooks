@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
   return (
     <footer>
       <div className="container">
         <div className="footer-left">
-          <span>&#169; 2023 FlawedCrystal</span>
+          <span>&#169; 2023 karginae</span>
         </div>
         <ul className="footer-right">
           <li>
@@ -28,5 +28,3 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-export default Footer;

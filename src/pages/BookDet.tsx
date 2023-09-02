@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import axios from '../axios';
-import Empty from '../components/Empty';
+import { Empty } from '../components';
 import { selectorIsAuth } from '../redux/slices/authSlice';
 import { fetchRemoveBook } from '../redux/slices/booksSlice';
 import { fetchAddCart, fetchRemoveCart } from '../redux/slices/cartSlice';

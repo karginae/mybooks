@@ -1,6 +1,6 @@
 import styles from './Empty.module.scss';
 
-import Button from '../Button';
+import { Button } from '../';
 
 import type { ButtonProps } from '../Button';
 
@@ -10,7 +10,7 @@ type EmptyProps = {
   button?: ButtonProps;
 };
 
-const Empty: React.FC<EmptyProps> = ({ title, description, button }) => {
+export const Empty: React.FC<EmptyProps> = ({ title, description, button }) => {
   return (
     <div className={styles.empty}>
       <h3 className={styles.title}>{title}</h3>
@@ -19,5 +19,3 @@ const Empty: React.FC<EmptyProps> = ({ title, description, button }) => {
     </div>
   );
 };
-
-export default Empty;
