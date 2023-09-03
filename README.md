@@ -18,6 +18,6 @@ My online bookstore - **myBooks**
 Разработка макета проекта в Фигме:
 
 <image
-  src="/img/figma/layout.jpg"
+  src="/public/img/figma/layout.jpg"
   alt="Figma layout"
   caption="Разработка макета проекта в Фигме">
