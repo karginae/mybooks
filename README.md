@@ -13,11 +13,11 @@ My online bookstore - **myBooks**
 - Code Splitting
 - ...
 
-* backend: https://github.com/karginae/mybooks_backend
+& backend: https://github.com/karginae/mybooks_backend
 
-Разработка макета проекта в Фигме:
+Project in Figma:
 
 <image
   src="/public/img/figma/layout.jpg"
   alt="Figma layout"
-  caption="Разработка макета проекта в Фигме">
+  caption="Project in Figma">
