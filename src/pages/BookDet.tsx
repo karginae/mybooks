@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import axios from '../axios';
-import { Empty } from '../components';
+import { Empty, Button } from '../components';
 import { selectorIsAuth } from '../redux/slices/authSlice';
 import { fetchRemoveBook } from '../redux/slices/booksSlice';
 import { fetchAddCart, fetchRemoveCart } from '../redux/slices/cartSlice';
@@ -64,11 +64,9 @@ const BookDet: React.FC = () => {
     <main>
       <div className="container">
         {!book ? (
-          <Empty
-            title={'Ошибка 404'}
-            description={'Страница не найдена'}
-            button={{ text: 'Перейти на главную', src: '/' }}
-          />
+          <Empty title={'Ошибка 404'} description={'Страница не найдена'}>
+            <Button text="Перейти на главную" src="/" />
+          </Empty>
         ) : (
           <>
             <h2>{book.title}</h2>

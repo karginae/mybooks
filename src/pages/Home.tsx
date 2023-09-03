@@ -20,7 +20,7 @@ const Home: React.FC<HomeProps> = ({ searchFilter }) => {
         </ErrorBoundary>
       ))
     ) : (
-      <Empty title={'Ничего не найдено'} button={{ text: 'Вернуться в каталог', src: '/' }} />
+      <Empty title={'Ничего не найдено'} />
     );
 
   return (

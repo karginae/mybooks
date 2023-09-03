@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import axios from '../../axios';
-import { Empty } from '../../components';
+import { Empty, Button } from '../../components';
 
 import styles from './Cart.module.scss';
 import { RootState } from '../../redux/store';
@@ -25,14 +25,13 @@ const Cart: React.FC = () => {
               <Empty
                 title={'Корзина пуста'}
                 description={'Для добавления товаров в корзину необходимо быть авторизованным'}
-                button={{ text: 'Войти/Зарегистрироваться', src: '/auth' }}
-              />
+              >
+                <Button text="Войти/Зарегистрироваться" src="/auth" />
+              </Empty>
             ) : cartBooks.data.length === 0 ? (
-              <Empty
-                title={'Ваша корзина пуста'}
-                description={'Добавьте нужные товары'}
-                button={{ text: 'Вернуться в каталог', src: '/' }}
-              />
+              <Empty title={'Ваша корзина пуста'} description={'Добавьте нужные товары'}>
+                <Button text="Вернуться в каталог" src="/" />
+              </Empty>
             ) : (
               <>
                 <div className={styles.actions}>

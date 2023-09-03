@@ -74,8 +74,7 @@ const booksSlice = createSlice({
       .addCase(fetchAddBook.pending, (state) => {
         state.status = SliceStatus.LOADING;
       })
-      .addCase(fetchAddBook.fulfilled, (state, action) => {
-        // state.data = [...state.data, action.payload];
+      .addCase(fetchAddBook.fulfilled, (state) => {
         state.status = SliceStatus.LOADED;
       })
       .addCase(fetchAddBook.rejected, (state) => {
@@ -94,7 +93,6 @@ const booksSlice = createSlice({
         state.status = SliceStatus.LOADING;
       })
       .addCase(fetchRemoveBook.fulfilled, (state) => {
-        // state.data = state.data.filter((book) => (book._id !== action.payload.id));
         state.status = SliceStatus.LOADED;
       })
       .addCase(fetchRemoveBook.rejected, (state) => {

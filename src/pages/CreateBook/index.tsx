@@ -223,7 +223,7 @@ const CreateBook: React.FC = () => {
               <input
                 type="submit"
                 disabled={!isValid}
-                className={`${styles.toSave} ${isLoading ? styles.loading : null}`}
+                className={`${isLoading ? 'loading' : null}`}
                 value="Сохранить"
               />
             </form>

@@ -84,7 +84,6 @@ const authSlice = createSlice({
   },
 });
 
-// export const selectorIsAuth = (state: RootState) => Boolean(state.auth.data?.email);
 export const selectorIsAuth = (state: RootState) => Boolean(state.auth.data?.email);
 
 export const { logout } = authSlice.actions;

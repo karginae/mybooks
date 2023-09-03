@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
+import { Button } from '../components';
 import { fetchAuth, logout } from '../redux/slices/authSlice';
 import { RootState, useAppDispatch } from '../redux/store';
-import { UserAuth } from '../redux/types/authType';
+import { SliceStatus, UserAuth } from '../redux/types/authType';
 
 const Auth: React.FC = () => {
   const dispatch = useAppDispatch();
   const isAuth = useSelector((state: RootState) => Boolean(state.auth.data?.email));
   const role = useSelector((state: RootState) => state.auth.data?.role);
+  const status = useSelector((state: RootState) => state.auth.status);
+  const fullName = useSelector((state: RootState) => state.auth.data?.fullName);
 
   const {
     register,
@@ -35,7 +37,6 @@ const Auth: React.FC = () => {
       } else if ('token' in data.payload) {
         window.location.replace('/');
         window.localStorage.setItem('token', data.payload.token);
-        // document.location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -43,7 +44,7 @@ const Auth: React.FC = () => {
   };
 
   const onLogout = () => {
-    document.location.replace('/');
+    window.location.replace('/');
     window.localStorage.removeItem('token');
     dispatch(logout());
   };
@@ -52,12 +53,25 @@ const Auth: React.FC = () => {
     return (
       <main>
         <div className="container">
-          <div onClick={() => onLogout()}>Выйти</div>
-          {role === 'admin' ? (
-            <Link to="/create-book">
-              <div>Создать книгу</div>
-            </Link>
-          ) : null}
+          <h2>{fullName}</h2>
+          <div className="personal-area">
+            <div className="info">
+              <p>Скоро здесь появится информация о ваших заказах &#128221;</p>
+            </div>
+            <div className="buttons">
+              {role === 'admin' ? (
+                <Button text="Создать книгу" src="/create-book" width="210px" />
+              ) : (
+                <Button text="Перейти в корзину" src="/cart" width="210px" />
+              )}
+              <input
+                className="input-logout"
+                type="submit"
+                onClick={() => onLogout()}
+                value="Выйти"
+              />
+            </div>
+          </div>
         </div>
       </main>
     );
@@ -69,25 +83,33 @@ const Auth: React.FC = () => {
         <h2>Вход</h2>
         <div className="auth">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div>Ошибки сервера: {errors.server?.message}</div>
-            <div>Ошибки почты: {errors.email?.message}</div>
-            <div>Ошибка пароля: {errors.password?.message}</div>
+            <ul className="fields">
+              <li>
+                <span className="fieldName">Почта</span>
+                <input
+                  className={errors?.email?.message ? 'input invalid' : 'input'}
+                  type="email"
+                  {...register('email', { required: 'Укажите почту' })}
+                />
+                <span className={`message errors`}>{errors?.email?.message}</span>
+              </li>
+              <li>
+                <span className="fieldName">Пароль</span>
+                <input
+                  className={errors?.password?.message ? 'input invalid' : 'input'}
+                  type="password"
+                  {...register('password', { required: 'Укажите пароль' })}
+                />
+                <span className={`message errors`}>{errors?.password?.message}</span>
+              </li>
+            </ul>
             <input
-              className="input"
-              type="email"
-              placeholder="Почта"
-              {...register('email', { required: 'Укажите почту' })}
+              type="submit"
+              disabled={!isValid}
+              className={`input-auth ${status === SliceStatus.LOADING ? 'loading' : null}`}
+              value="Войти"
             />
-            <input
-              className="input"
-              type="password"
-              placeholder="Пароль"
-              {...register('password', { required: 'Укажите пароль' })}
-            />
-            <input type="submit" disabled={!isValid} />
-            <Link to="/registration">
-              <div>Зарегистрироваться</div>
-            </Link>
+            <Button text="Зарегистрироваться" src="/registration" width="210px" />
           </form>
         </div>
       </div>

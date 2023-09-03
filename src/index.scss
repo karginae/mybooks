@@ -1,5 +1,6 @@
 @import './styles/container';
 @import './styles/hoverBrightness';
+@import '/src/styles/disabled';
 
 * {
   color: #fff;
@@ -21,9 +22,22 @@ a {
   color: inherit;
 }
 
+p {
+  margin: 0;
+}
+
 input {
   outline: none;
   border: none;
+
+  &[type='submit'] {
+    &.loading {
+      @extend %disabled;
+    }
+    &:disabled {
+      @extend %disabled;
+    }
+  }
 }
 
 body {
@@ -160,6 +174,63 @@ main {
     margin: 0 0 30px 0;
   }
 
+  .fields {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+
+    li {
+      position: relative;
+      margin-bottom: 30px;
+
+      &:nth-last-child(1) {
+        margin-bottom: 40px;
+      }
+
+      .fieldName {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .message {
+        display: block;
+        position: absolute;
+        bottom: -25px;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  form {
+    input {
+      &[type='submit'] {
+        display: block;
+        width: 210px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        line-height: 1em;
+        background-color: #130d3d;
+        border-radius: 15px;
+        @extend %hover-brightness;
+        cursor: pointer;
+
+        &.hidden {
+          display: none;
+        }
+      }
+    }
+
+    .input-auth {
+      margin-bottom: 20px;
+    }
+  }
+
   .input {
     transition: border 0.25s ease-in-out;
     width: 210px;
@@ -185,6 +256,7 @@ main {
         background-color: #130d3d;
         border: none;
         transition: all 0.3s ease-out 0s;
+        cursor: pointer;
 
         &:hover {
           @extend %hover-brightness;
@@ -194,6 +266,35 @@ main {
 
     &:focus {
       border: 1px solid #54516d;
+    }
+  }
+
+  .personal-area {
+    .info {
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .input-logout {
+        display: block;
+        width: 210px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        text-align: center;
+        line-height: 1em;
+        background-color: #3d0d0d;
+        border-radius: 15px;
+        @extend %hover-brightness;
+        cursor: pointer;
+      }
     }
   }
 

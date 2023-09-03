@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div className="body">
-      <Header getSearchValue={(value: string) => setSearchValue(value)} />
+      <Header setSearchValue={(value: string) => setSearchValue(value)} />
       <Routes>
         <Route path="/" element={<Home searchFilter={searchFilter} />} />
         <Route path="/registration" element={<Registration />} />

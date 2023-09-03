@@ -6,13 +6,13 @@ import debounce from 'lodash.debounce';
 import { RootState } from '../redux/store';
 
 type HeaderProps = {
-  getSearchValue: (value: string) => void;
+  setSearchValue: (value: string) => void;
 };
 
-export const Header: React.FC<HeaderProps> = ({ getSearchValue }) => {
+export const Header: React.FC<HeaderProps> = ({ setSearchValue }) => {
   const [scrolled, setScrolled] = React.useState<boolean>(false);
   const [isSearching, setIsSearching] = React.useState<boolean>(false);
-  const [searchValue, setSearchValue] = React.useState<string>('');
+  const [searchInputValue, setSearchInputValue] = React.useState<string>('');
   const [burger, setBurger] = React.useState<boolean>(false);
 
   const searchInputRef = React.useRef<HTMLInputElement>(null);
@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ getSearchValue }) => {
 
   const searchDebounce = React.useCallback(
     debounce((e: React.ChangeEvent<HTMLInputElement>) => {
-      getSearchValue(e.target.value);
+      setSearchValue(e.target.value);
     }, 500),
     [],
   );
@@ -74,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ getSearchValue }) => {
   const cartValue = () => cart?.length;
 
   const searching = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    setSearchInputValue(e.target.value);
     searchDebounce(e);
   };
 
@@ -109,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({ getSearchValue }) => {
             onChange={searching}
             className="search-input"
             type={'text'}
-            value={searchValue}
+            value={searchInputValue}
             ref={searchInputRef}
             placeholder="Поиск..."
           />
@@ -121,11 +121,11 @@ export const Header: React.FC<HeaderProps> = ({ getSearchValue }) => {
           </div>
         )}
         <ul className="header-right">
-          {searchValue && isSearching ? (
+          {searchInputValue && isSearching ? (
             <li
               onClick={() => {
+                setSearchInputValue('');
                 setSearchValue('');
-                getSearchValue('');
                 searchInputRef.current?.focus();
               }}
               className="close-search-logo"

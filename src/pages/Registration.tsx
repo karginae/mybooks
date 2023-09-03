@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { fetchReg } from '../redux/slices/authSlice';
 import { RootState, useAppDispatch } from '../redux/store';
-import { UserReg } from '../redux/types/authType';
+import { SliceStatus, UserReg } from '../redux/types/authType';
 
 const Registration: React.FC = () => {
   const {
@@ -24,6 +24,7 @@ const Registration: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const isAuth = useSelector((state: RootState) => Boolean(state.auth.data?.email));
+  const status = useSelector((state: RootState) => state.auth.status);
 
   const onSubmit = async (values: UserReg) => {
     try {
@@ -33,6 +34,7 @@ const Registration: React.FC = () => {
           setError(param, { message: msg }),
         );
       } else if ('token' in data.payload) {
+        window.location.replace('/');
         window.localStorage.setItem('token', data.payload.token);
       }
     } catch (error) {
@@ -50,29 +52,41 @@ const Registration: React.FC = () => {
         <h2>Регистрация</h2>
         <div className="auth">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div>Ошибки сервера: {errors.server?.message}</div>
-            <div>Ошибки имени: {errors.fullName?.message}</div>
-            <div>Ошибки почты: {errors.email?.message}</div>
-            <div>Ошибка пароля: {errors.password?.message}</div>
+            <ul className="fields">
+              <li>
+                <span className="fieldName">Имя</span>
+                <input
+                  className={errors?.fullName?.message ? 'input invalid' : 'input'}
+                  type="text"
+                  {...register('fullName', { required: 'Укажите имя' })}
+                />
+                <span className={`message errors`}>{errors?.fullName?.message}</span>
+              </li>
+              <li>
+                <span className="fieldName">Почта</span>
+                <input
+                  className={errors?.email?.message ? 'input invalid' : 'input'}
+                  type="email"
+                  {...register('email', { required: 'Укажите почту' })}
+                />
+                <span className={`message errors`}>{errors?.email?.message}</span>
+              </li>
+              <li>
+                <span className="fieldName">Пароль</span>
+                <input
+                  className={errors?.password?.message ? 'input invalid' : 'input'}
+                  type="password"
+                  {...register('password', { required: 'Укажите пароль' })}
+                />
+                <span className={`message errors`}>{errors?.password?.message}</span>
+              </li>
+            </ul>
             <input
-              className="input"
-              type="text"
-              placeholder="Имя"
-              {...register('fullName', { required: 'Укажите имя' })}
+              type="submit"
+              disabled={!isValid}
+              className={`input-reg ${status === SliceStatus.LOADING ? 'loading' : null}`}
+              value="Зарегестрироваться"
             />
-            <input
-              className="input"
-              type="email"
-              placeholder="Почта"
-              {...register('email', { required: 'Укажите почту' })}
-            />
-            <input
-              className="input"
-              type="password"
-              placeholder="Пароль"
-              {...register('password', { required: 'Укажите пароль' })}
-            />
-            <input type="submit" disabled={!isValid} />
           </form>
         </div>
       </div>

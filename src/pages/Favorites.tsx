@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Book, Empty } from '../components';
+import { Book, Empty, Button } from '../components';
 import { RootState } from '../redux/store';
 
 const Favorites: React.FC = () => {
@@ -19,14 +19,13 @@ const Favorites: React.FC = () => {
               <Empty
                 title={'Нет избранных товаров'}
                 description={'Для добавления товаров в избранное необходимо быть авторизованным'}
-                button={{ text: 'Войти/Зарегистрироваться', src: '/auth' }}
-              />
+              >
+                <Button text="Войти/Зарегистрироваться" src="/auth" />
+              </Empty>
             ) : favorites.data.length === 0 ? (
-              <Empty
-                title={'Нет избранных товаров'}
-                description={'Добавьте нужные товары'}
-                button={{ text: 'Вернуться в каталог', src: '/' }}
-              />
+              <Empty title={'Нет избранных товаров'} description={'Добавьте нужные товары'}>
+                <Button text="Вернуться в каталог" src="/" />
+              </Empty>
             ) : (
               favorites.data.map((favoriteBook, index) => (
                 <Book key={index} {...favoriteBook.book} />

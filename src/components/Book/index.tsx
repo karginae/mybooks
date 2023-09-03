@@ -42,7 +42,6 @@ export const Book: React.FC<BookProps> = ({ _id, title, author, year, pages, pri
 
   const clickLike = () => {
     if (isAuth) {
-      // like ? removeFavorite(_id) : addFavorite({_id});
       like ? dispatch(fetchRemoveFavorite(_id)) : dispatch(fetchAddFavorite({ _id }));
       setLike(!like);
     } else {
