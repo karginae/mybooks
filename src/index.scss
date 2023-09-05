@@ -490,3 +490,59 @@ footer {
     }
   }
 }
+
+@media only screen and (max-width: 560px) {
+  .body {
+    grid-template-rows: 110px 1fr 80px;
+  }
+
+  header {
+    .container {
+      display: grid;
+      grid-template-columns: 100%;
+      grid-template-rows: 10fr 7fr;
+      .search-input {
+        margin: auto 0 auto 10px;
+        width: 90%;
+      }
+    }
+  }
+
+  .header-left {
+    display: none;
+  }
+
+  .header-centr {
+    justify-content: center;
+    width: 100%;
+
+    h1 {
+      font-size: 40px;
+    }
+  }
+
+  .header-right {
+    justify-content: center;
+    width: 100%;
+
+    li {
+      margin: auto 12px auto 12px;
+    }
+  }
+
+  main {
+    padding: 20px 0;
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+    }
+
+    .books {
+      grid-template-columns: repeat(2, 140px);
+      row-gap: 20px;
+      justify-content: space-around;
+    }
+  }
+}

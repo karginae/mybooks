@@ -114,3 +114,45 @@
     }
   }
 }
+
+@media only screen and (max-width: 560px) {
+  .book {
+    width: 140px;
+    height: 219px;
+
+    .infoTop {
+      height: 35px;
+
+      .price {
+        font-size: 15px;
+      }
+
+      .like {
+        height: 15px;
+
+        &:active {
+          transform: scale(0.93);
+        }
+      }
+    }
+
+    .infoBottom {
+      height: 60px;
+      font-size: 9px;
+      font-weight: 700;
+
+      .title {
+        margin-top: 4px;
+        margin-bottom: 3px;
+      }
+
+      .author {
+        margin-bottom: 3px;
+      }
+
+      .year {
+        margin-bottom: 3px;
+      }
+    }
+  }
+}
